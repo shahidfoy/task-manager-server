@@ -1,5 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { TaskManagerService } from './task-manager.service';
+import { DateRange } from './interfaces/date-range.interface';
 
 @Controller('task-manager')
 export class TaskManagerController {
@@ -8,11 +9,11 @@ export class TaskManagerController {
     @Post('add-task')
     async addTask(
         @Body('taskName') taskName: string,
-        @Body('taskName') dateRange: Array<Date>,
-        @Body('taskName') startTime: string,
-        @Body('taskName') endTime: string,
-        @Body('taskName') includedDays: Array<number>,
+        @Body('dateRange') dateRange: DateRange,
+        @Body('startTime') startTime: string,
+        @Body('endTime') endTime: string,
+        @Body('includedDayIndex') includedDayIndex: Array<number>,
     ): Promise<Partial<any>> {
-        return this.taskmangerService.addTask('', taskName, dateRange, startTime, endTime, includedDays);
+        return this.taskmangerService.addTask('', taskName, dateRange, startTime, endTime, includedDayIndex);
     }
 }

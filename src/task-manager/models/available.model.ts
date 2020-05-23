@@ -5,7 +5,7 @@ export const AvailableSchema = new mongoose.Schema({
     dateRange: [{ type: Date, default: Date.now() }],
     startTime: { type: String, default: '' },
     endTime: { type: String, default: '' },
-    includedDays: [ { type: Number } ]
+    includedDayIndex: [ { type: Number } ]
 });
 
 export interface Available extends mongoose.Document {
@@ -14,5 +14,5 @@ export interface Available extends mongoose.Document {
     dateRange: Array<Date>;
     startTime: string;
     endTime: string;
-    inculdeDays: Array<number>;
+    inculdeDayIndex: Array<number>;
 }
