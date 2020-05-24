@@ -16,11 +16,11 @@ export class TaskManagerService {
         const startDate = new Date(dateRange.startDate);
         const endDate = new Date(dateRange.endDate);
 
-        if (!startDate) {
+        if (!dateRange.startDate) {
             throw new InternalServerErrorException({ message: 'starting date not set.' });
         }
 
-        if (!endDate) {
+        if (!dateRange.endDate) {
             const task: Partial<Task> = {
                 userId,
                 taskName,
@@ -31,7 +31,7 @@ export class TaskManagerService {
     
             return await this.taskModel.create(task).then(async (newTask: Task) => {
                 const response = { message: 'Task Created Successfully' };
-                return { message: 'task created successfully' };
+                return { message: 'task created' };
             }).catch(err => { 
                 throw new InternalServerErrorException({ message: `Error creating task ${err}`}); 
             });
@@ -39,6 +39,7 @@ export class TaskManagerService {
             // double check this
             const lengthOfDays = endDate.getDate() - startDate.getDate() + 1;
             // console.log(lengthOfDays);
+            let tasksCreated = 0;
 
             for (let i = 0; i < lengthOfDays; i++) {
                 const date = new Date(startDate);
@@ -55,13 +56,13 @@ export class TaskManagerService {
                     }
 
                     await this.taskModel.create(task).then(async (newTask: Task) => {
-                        return newTask;
+                        tasksCreated++;
                     }).catch(err => { 
                         throw new InternalServerErrorException({ message: `Error creating task for week ${err}`}); 
                     });
                 }
             }
-            return { message: 'tasks created successfully' };
+            return { message: `${tasksCreated} tasks created` };
         }
     }
 }
