@@ -79,7 +79,7 @@ export class TaskManagerService {
             }
     
             return await this.taskModel.create(task).then(async (newTask: Task) => {
-                return { message: 'task created' };
+                return { message: 'new task created' };
             }).catch(err => { 
                 throw new InternalServerErrorException({ message: `Error creating task ${err}`}); 
             });
@@ -108,7 +108,7 @@ export class TaskManagerService {
                     });
                 }
             }
-            return { message: `${tasksCreated} tasks created` };
+            return { message: `${tasksCreated} new tasks created` };
         }
     }
 
