@@ -28,7 +28,7 @@ export class TaskManagerService {
                 endTime,
             }
     
-            return await this.taskModel.create(available).then(async (newAvailable: Task) => {
+            return await this.availableModel.create(available).then(async (newAvailable: Task) => {
                 return { message: 'task created' };
             }).catch(err => { 
                 throw new InternalServerErrorException({ message: `Error creating availability ${err}`}); 
@@ -52,7 +52,7 @@ export class TaskManagerService {
                         endTime,
                     }
 
-                    await this.taskModel.create(available).then(async (newAvailable: Task) => {
+                    await this.availableModel.create(available).then(async (newAvailable: Task) => {
                         availabilityCountsCreated++;
                     }).catch(err => { 
                         throw new InternalServerErrorException({ message: `Error setting availability ${err}`}); 
