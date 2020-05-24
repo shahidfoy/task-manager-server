@@ -14,6 +14,6 @@ export class TaskManagerController {
         @Body('endTime') endTime: string,
         @Body('includedDayIndex') includedDayIndex: Array<number>,
     ): Promise<Partial<any>> {
-        return this.taskmangerService.addTask('', taskName, dateRange, startTime, endTime, includedDayIndex);
+        return this.taskmangerService.addTask('tester', taskName, dateRange, startTime, endTime, includedDayIndex);
     }
 }

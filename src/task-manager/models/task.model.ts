@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const TaskSchema = new mongoose.Schema({
     userId: { type: String, default: '' },
-    taskName: { type: String, required: true },
+    taskName: { type: String },
     date: { type: Date, default: Date.now() },
     startTime: { type: String, default: '' },
     endTime: { type: String, default: '' },
