@@ -21,57 +21,55 @@ export class TaskManagerService {
         console.log('end date', endDate);
 
         if (!endDate) {
-            // remove included day index
             const task: Partial<Task> = {
                 userId,
                 taskName,
                 date: startDate,
                 startTime,
                 endTime,
-                includedDayIndex,
             }
     
             return await this.taskModel.create(task).then(async (newTask: Task) => {
                 const response = { message: 'Task Created Successfully' };
+                // return success message
                 return null;
             }).catch(err => { 
                 throw new InternalServerErrorException({ message: `Error creating task ${err}`}); 
             });
         } else {
-            console.log(endDate.getDate() - startDate.getDate());
+            // console.log(endDate.getDate() - startDate.getDate());
+            // double check this
             const lengthOfDays = endDate.getDate() - startDate.getDate() + 1;
 
             for (let i = 0; i < lengthOfDays; i++) {
                 const date = new Date(startDate);
                 date.setDate(date.getDate() + i);
 
-                // remove included day index
-                const task: Partial<Task> = {
-                    userId,
-                    taskName,
-                    date,
-                    startTime,
-                    endTime,
-                    includedDayIndex,
+                const dateIncluded = includedDayIndex.filter(dayIndex => dayIndex === date.getDay());
+                if (dateIncluded.length === 1) {
+                    console.log('dateIncluded', dateIncluded);
+
+                    const task: Partial<Task> = {
+                        userId,
+                        taskName,
+                        date,
+                        startTime,
+                        endTime,
+                    }
+
+                    const newTask = await this.taskModel.create(task).then(async (newTask: Task) => {
+                        return newTask;
+                    }).catch(err => { 
+                        throw new InternalServerErrorException({ message: `Error creating task for week ${err}`}); 
+                    });
+
+                    console.log('NEWtASK', newTask);
                 }
 
-                console.log(task);
-
-                const newTask = await this.taskModel.create(task).then(async (newTask: Task) => {
-                    // console.log('NEW TASK', newTask);
-                    return newTask;
-                }).catch(err => { 
-                    throw new InternalServerErrorException({ message: `Error creating task for week ${err}`}); 
-                });
-
-                console.log('NEWtASK', newTask);
             }
 
+            // return success message
             return null;
         }
-
-                    // TODO ADD STUFF HERE 
-
-        return undefined;
     }
 }
