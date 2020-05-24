@@ -29,14 +29,13 @@ export class TaskManagerService {
             }
     
             return await this.availableModel.create(available).then(async (newAvailable: Task) => {
-                return { message: 'task created' };
+                return { message: 'availability created' };
             }).catch(err => { 
                 throw new InternalServerErrorException({ message: `Error creating availability ${err}`}); 
             });
         } else {
-            // double check this
-            const lengthOfDays = endDate.getDate() - startDate.getDate() + 1;
-            // console.log(lengthOfDays);
+            const lengthOfDays = this.differenceInDays(startDate, endDate) + 1;
+            console.log(lengthOfDays);
             let availabilityCountsCreated = 0;
 
             for (let i = 0; i < lengthOfDays; i++) {
@@ -86,9 +85,7 @@ export class TaskManagerService {
                 throw new InternalServerErrorException({ message: `Error creating task ${err}`}); 
             });
         } else {
-            // double check this
-            const lengthOfDays = endDate.getDate() - startDate.getDate() + 1;
-            // console.log(lengthOfDays);
+            const lengthOfDays = this.differenceInDays(startDate, endDate) + 1;;
             let tasksCreated = 0;
 
             for (let i = 0; i < lengthOfDays; i++) {
@@ -114,5 +111,26 @@ export class TaskManagerService {
             }
             return { message: `${tasksCreated} tasks created` };
         }
+    }
+
+    private differenceInDays(firstDate: any, secondDate: any) {
+        console.log(firstDate);
+        console.log(secondDate);
+        // todo fix date calculations
+        return Math.round((secondDate - firstDate) / (1000 * 3600 * 24));
+
+        // length of days for each month
+        // january: 31
+        // febuary: 28 - 29
+        // march: 31
+        // april: 30
+        // may: 31
+        // june: 30
+        // july: 31
+        // august: 31
+        // september: 30
+        // october: 31
+        // november: 30
+        // december: 31
     }
 }

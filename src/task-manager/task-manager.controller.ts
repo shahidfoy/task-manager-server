@@ -6,6 +6,16 @@ import { DateRange } from './interfaces/date-range.interface';
 export class TaskManagerController {
     constructor(private readonly taskmangerService: TaskManagerService) {}
 
+    @Post('set-available')
+    async setAvailable(
+        @Body('dateRange') dateRange: DateRange,
+        @Body('startTime') startTime: string,
+        @Body('endTime') endTime: string,
+        @Body('includedDayIndex') includedDayIndex: Array<number>,
+    ): Promise<Partial<any>> {
+        return this.taskmangerService.addAvailabile('tester', dateRange, startTime, endTime, includedDayIndex);
+    }
+
     @Post('add-task')
     async addTask(
         @Body('taskName') taskName: string,
