@@ -35,7 +35,6 @@ export class TaskManagerService {
             });
         } else {
             const lengthOfDays = this.differenceInDays(startDate, endDate) + 1;
-            console.log(lengthOfDays);
             let availabilityCountsCreated = 0;
 
             for (let i = 0; i < lengthOfDays; i++) {
@@ -114,9 +113,6 @@ export class TaskManagerService {
     }
 
     private differenceInDays(firstDate: any, secondDate: any) {
-        console.log(firstDate);
-        console.log(secondDate);
-        // todo fix date calculations
         return Math.round((secondDate - firstDate) / (1000 * 3600 * 24));
 
         // length of days for each month
