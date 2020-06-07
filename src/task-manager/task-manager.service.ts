@@ -129,4 +129,23 @@ export class TaskManagerService {
         // november: 30
         // december: 31
     }
+
+
+    // TODO:: ADD METHODS TO GET USER TASK AND AVAILABLITY
+    async getUserTasks(userId: string, dateRange: DateRange): Promise<any> {
+        // throw new Error("Method not implemented.");
+        console.log('DATE RANGE', dateRange);
+        return await this.taskModel.find({
+            userId,
+            $and: [
+                { date: { $gte: dateRange.startDate } },
+                { date: { $lte: dateRange.endDate } },
+            ]
+        }, {}).populate('_id');
+        // return undefined;
+    }
+
+    getUserAvailablity(userId: string, dateRange: DateRange): Partial<any> | PromiseLike<Partial<any>> {
+        throw new Error("Method not implemented.");
+    }
 }
