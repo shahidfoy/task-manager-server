@@ -46,6 +46,8 @@ export class TaskManagerController {
         @Param('startDate') startDate: any,
         @Param('endDate') endDate: any,
     ): Promise<Partial<any>> {
+        console.log('START DATE', startDate);
+        console.log('END DATE', endDate);
         const dateRange = {
             startDate,
             endDate
